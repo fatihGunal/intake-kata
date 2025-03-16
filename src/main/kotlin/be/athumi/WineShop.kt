@@ -115,7 +115,7 @@ class WineShop(var items: List<Wine>) {
     }
 
     private fun decreaseEcoBrewedWine(wine: Wine) {
-        // I'm not sure if I should continue developing this, since the explanation clearly states
-        // that no code should be added, only refactored.
+        // I'm unsure whether I should continue developing this, as the explanation clearly specifies that only a refactor is required
+        // Refactor: about improving the existing code without changing how it works, making it easier to understand and maintain
     }
 }
