@@ -17,7 +17,7 @@ class WineTest {
     }
 
     @Test
-    fun `should degrade in price when annual inventory audit with standard wine`() {
+    fun `should decrease in price when annual inventory audit with standard wine`() {
         val shop = WineShop(listOf(Wine("Standard Wine", 50, 10)))
 
         shop.annualInventoryUpdate()
@@ -35,7 +35,7 @@ class WineTest {
     }
 
     @Test
-    fun `should degrade twice in price when annual inventory audit with expired standard wine`() {
+    fun `should decrease twice in price when annual inventory audit with expired standard wine`() {
         val shop = WineShop(listOf(Wine("Standard Wine", 50, 0)))
 
         shop.annualInventoryUpdate()
@@ -45,7 +45,7 @@ class WineTest {
     }
 
     @Test
-    fun `should never degrade in price when standard wine is expired`() {
+    fun `should never decrease in price when standard wine is expired`() {
         val shop = WineShop(listOf(Wine("Standard Wine", -1, -1)))
 
         shop.annualInventoryUpdate()
@@ -101,7 +101,7 @@ class WineTest {
     }
 
     @Test
-    fun `should increase in price when wine is event wine`() {
+    fun `should increase in price when wine is a event wine`() {
         val shop = WineShop(listOf(Wine("Event Wine", 50, 10)))
 
         shop.annualInventoryUpdate()
