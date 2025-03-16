@@ -60,8 +60,6 @@ class WineShop(var items: List<Wine>) {
         }
     }
 
-    // --- Tip: Uncle Bob's clean code suggests creating the following methods to improve the readability of the function above.
-    // --- However, I don't always agree with this approach, as it can sometimes lead to an excessive number of functions.
     private fun shouldIncreasePrice(wine: Wine): Boolean {
         return wine.price < 100
     }
