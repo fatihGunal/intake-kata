@@ -2,6 +2,8 @@ package be.athumi
 
 private const val BASE_PRICE_INCREASE = 1
 private const val INCREASE_FACTOR = 2
+private const val BASE_PRICE_DECREASE = 1
+private const val DECREASE_FACTOR = 2
 
 class WineShop(var items: List<Wine>) {
     fun annualInventoryUpdate() {
@@ -40,27 +42,37 @@ class WineShop(var items: List<Wine>) {
             }
 
             if (wine.expiresInYears < 0) {
-                if (!wine.name.contains("Conservato")) {
-                    if (!wine.name.contains("Event")) {
-                        if (wine.price > 0) {
-                            if (wine.name != "Wine brewed by Alexander the Great") {
-                                wine.price = wine.price - 1
-                            }
-                        }
-                    } else {
-                        wine.price = wine.price - wine.price
-                    }
-                } else {
-                    if (wine.price < 100) {
-                        wine.price = wine.price + 1
-                    }
+                when {
+                    isAgingWine -> increaseWinePrice(wine, isEventWine)
+                    isEventWine -> wine.price = 0
+                    wine.price > 0 && !isLegendaryWine -> wine.price--
                 }
             }
-
-            if (wine.price < 0) {
-                wine.price = 0
-            }
         }
+    }
+
+    private fun decreaseWinePrice(wine: Wine) {
+        if (shouldDecreaseWinePrice(wine)) {
+            if (unexpiredWine(wine)) {
+                applyPriceDecrease(wine)
+            } else {
+                applyPriceDecreaseWithFactor(wine)
+            }
+        } else {
+            wine.price = 0
+        }
+    }
+
+    private fun shouldDecreaseWinePrice(wine: Wine): Boolean {
+        return wine.price > 0
+    }
+
+    private fun applyPriceDecrease(wine: Wine) {
+        wine.price -= BASE_PRICE_INCREASE
+    }
+
+    private fun applyPriceDecreaseWithFactor(wine: Wine) {
+        wine.price -= DECREASE_FACTOR * DECREASE_FACTOR
     }
 
     private fun increaseWinePrice(wine: Wine, isEventWine: Boolean) {
