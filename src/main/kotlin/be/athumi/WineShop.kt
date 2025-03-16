@@ -12,15 +12,15 @@ class WineShop(var items: List<Wine>) {
             val isEventWine = wine.name.startsWith("Event")
             val isLegendaryWine = wine.name == "Wine brewed by Alexander the Great"
 
-            if (isAgingWine || isEventWine) {
+            if (wine.isAgingWine() || wine.isEventWine()) {
                 increaseWinePrice(wine, isEventWine)
             }
 
-            if (!isAgingWine && !isEventWine && !isLegendaryWine) {
+            if (!wine.isAgingWine() && !wine.isEventWine() && !wine.isLegendaryWine()) {
                 decreaseWinePrice(wine)
             }
 
-            if (!isLegendaryWine) {
+            if (!wine.isLegendaryWine()) {
                 decreaseExpiresInYeas(wine)
             }
         }
@@ -101,4 +101,8 @@ class WineShop(var items: List<Wine>) {
     private fun decreaseExpiresInYeas(wine: Wine) {
         wine.expiresInYears -= 1
     }
+
+    private fun Wine.isAgingWine() = name.contains("Conservato")
+    private fun Wine.isEventWine() = name.startsWith("Event")
+    private fun Wine.isLegendaryWine() = name == "Wine brewed by Alexander the Great"
 }
