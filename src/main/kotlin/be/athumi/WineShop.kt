@@ -12,6 +12,7 @@ class WineShop(var items: List<Wine>) {
                 WineCategory.AGING -> increaseWinePrice(wine, false)
                 WineCategory.EVENT -> increaseWinePrice(wine, true)
                 WineCategory.LEGENDARY -> adjustPriceForLegendaryWine(wine)
+                WineCategory.ECO_BREWED -> decreaseEcoBrewedWine(wine)
                 WineCategory.STANDARD -> decreaseWinePrice(wine)
             }
 
@@ -98,7 +99,7 @@ class WineShop(var items: List<Wine>) {
     }
 
     enum class WineCategory {
-        AGING, EVENT, LEGENDARY, STANDARD
+        AGING, EVENT, LEGENDARY, ECO_BREWED, STANDARD
     }
 
     fun Wine.getWineCategory(): WineCategory {
@@ -106,11 +107,17 @@ class WineShop(var items: List<Wine>) {
             this.name.contains("Conservato") -> WineCategory.AGING
             this.name.startsWith("Event") -> WineCategory.EVENT
             this.name == "Wine brewed by Alexander the Great" -> WineCategory.LEGENDARY
+            this.name.startsWith("Eco") -> WineCategory.ECO_BREWED
             else -> WineCategory.STANDARD
         }
     }
 
     private fun adjustPriceForLegendaryWine(wine: Wine) {
         // Legendary wine does not change its price, so we do nothing here.
+    }
+
+    private fun decreaseEcoBrewedWine(wine: Wine) {
+        // I'm not sure if I should continue developing this, since the explanation clearly states
+        // that no code should be added, only refactored.
     }
 }
