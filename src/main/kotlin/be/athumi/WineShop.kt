@@ -8,20 +8,15 @@ private const val DECREASE_FACTOR = 2
 class WineShop(var items: List<Wine>) {
     fun annualInventoryUpdate() {
         for (wine in items) {
-            val isAgingWine = wine.name.contains("Conservato")
-            val isEventWine = wine.name.startsWith("Event")
-            val isLegendaryWine = wine.name == "Wine brewed by Alexander the Great"
-
-            if (wine.isAgingWine() || wine.isEventWine()) {
-                increaseWinePrice(wine, isEventWine)
+            when (wine.getWineCategory()) {
+                WineCategory.AGING -> increaseWinePrice(wine, false)
+                WineCategory.EVENT -> increaseWinePrice(wine, true)
+                WineCategory.LEGENDARY -> adjustPriceForLegendaryWine(wine)
+                WineCategory.STANDARD -> decreaseWinePrice(wine)
             }
 
-            if (!wine.isAgingWine() && !wine.isEventWine() && !wine.isLegendaryWine()) {
-                decreaseWinePrice(wine)
-            }
-
-            if (!wine.isLegendaryWine()) {
-                decreaseExpiresInYeas(wine)
+            if (wine.getWineCategory() != WineCategory.LEGENDARY) {
+                decreaseExpiresInYears(wine)
             }
         }
     }
@@ -98,11 +93,24 @@ class WineShop(var items: List<Wine>) {
         return isEventWine && wine.expiresInYears < 8
     }
 
-    private fun decreaseExpiresInYeas(wine: Wine) {
+    private fun decreaseExpiresInYears(wine: Wine) {
         wine.expiresInYears -= 1
     }
 
-    private fun Wine.isAgingWine() = name.contains("Conservato")
-    private fun Wine.isEventWine() = name.startsWith("Event")
-    private fun Wine.isLegendaryWine() = name == "Wine brewed by Alexander the Great"
+    enum class WineCategory {
+        AGING, EVENT, LEGENDARY, STANDARD
+    }
+
+    fun Wine.getWineCategory(): WineCategory {
+        return when {
+            this.name.contains("Conservato") -> WineCategory.AGING
+            this.name.startsWith("Event") -> WineCategory.EVENT
+            this.name == "Wine brewed by Alexander the Great" -> WineCategory.LEGENDARY
+            else -> WineCategory.STANDARD
+        }
+    }
+
+    private fun adjustPriceForLegendaryWine(wine: Wine) {
+        // Legendary wine does not change its price, so we do nothing here.
+    }
 }
