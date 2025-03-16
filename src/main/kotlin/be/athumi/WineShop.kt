@@ -7,46 +7,14 @@ private const val DECREASE_FACTOR = 2
 
 class WineShop(var items: List<Wine>) {
     fun annualInventoryUpdate() {
-        // Wine Shop logic
         for (wine in items) {
-            if (wine.name != "Bourdeaux Conservato" && wine.name != "Bourgogne Conservato" && !wine.name.startsWith("Event")) {
-                if (wine.price > 0) {
-                    if (wine.name != "Wine brewed by Alexander the Great") {
-                        wine.price = wine.price - 1
-                    }
-                }
-            } else {
-                if (wine.price < 100) {
-                    wine.price = wine.price + 1
+            val isAgingWine = wine.name.contains("Conservato")
+            val isEventWine = wine.name.startsWith("Event")
+            val isLegendaryWine = wine.name == "Wine brewed by Alexander the Great"
 
-                    if (wine.name.startsWith("Event")) {
-                        if (wine.expiresInYears < 8) {
-                            if (wine.price < 100) {
-                                wine.price = wine.price + 1
-                            }
-                        }
-
-                        if (wine.expiresInYears < 3) {
-                            if (wine.price < 100) {
-                                wine.price = wine.price + 2
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (wine.name != "Wine brewed by Alexander the Great") {
-                wine.expiresInYears = wine.expiresInYears - 1
-            } else if (wine.price < 0) {
-                wine.price = 0
-            }
-
-            if (wine.expiresInYears < 0) {
-                when {
-                    isAgingWine -> increaseWinePrice(wine, isEventWine)
-                    isEventWine -> wine.price = 0
-                    wine.price > 0 && !isLegendaryWine -> wine.price--
-                }
+            when {
+                isAgingWine || isEventWine -> increaseWinePrice(wine, isEventWine)
+                !isAgingWine && !isEventWine && !isLegendaryWine -> decreaseWinePrice(wine)
             }
         }
     }
