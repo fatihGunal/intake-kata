@@ -94,6 +94,6 @@ class WineShop(var items: List<Wine>) {
     }
 
     private fun isEventWine(wine: Wine, isEventWine: Boolean): Boolean {
-        return isEventWine && wine.expiresInYears < 7
+        return isEventWine && wine.expiresInYears < 8
     }
 }
