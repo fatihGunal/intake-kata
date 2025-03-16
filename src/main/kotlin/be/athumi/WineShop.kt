@@ -64,13 +64,7 @@ class WineShop(var items: List<Wine>) {
     }
 
     private fun applyEventWinePriceIncrease(wine: Wine) {
-        val priceIncrease: Int
-        if (wine.expiresInYears < 0) {
-            priceIncrease = 0
-        } else {
-            priceIncrease = getEventWinePriceIncrease(wine)
-        }
-        wine.price += priceIncrease
+        wine.price += getEventWinePriceIncrease(wine)
     }
 
     private fun unexpiredWine(wine: Wine): Boolean {
@@ -87,7 +81,7 @@ class WineShop(var items: List<Wine>) {
 
     private fun applyPriceIncreaseWithFactor(wine: Wine, isEventWine: Boolean) {
         if (isEventWine) {
-            wine.expiresInYears = 0
+            wine.price = 0
         } else {
             wine.price += BASE_PRICE_INCREASE * INCREASE_FACTOR
         }
