@@ -45,7 +45,7 @@ class WineTest {
     }
 
     @Test
-    fun `should never decrease in price when standard wine is expired`() {
+    fun `should never decrease in price when standard wine is expired and price is negative`() {
         val shop = WineShop(listOf(Wine("Standard Wine", -1, -1)))
 
         shop.annualInventoryUpdate()

@@ -69,7 +69,7 @@ class WineShop(var items: List<Wine>) {
                 if (isEventWine(wine, isEventWine)) {
                     applyEventWinePriceIncrease(wine)
                 } else {
-                    applyStandardPriceIncrease(wine)
+                    applyPriceIncrease(wine)
                 }
             } else {
                 applyPriceIncreaseWithFactor(wine, isEventWine)
@@ -78,7 +78,7 @@ class WineShop(var items: List<Wine>) {
     }
 
     // --- Tip: Uncle Bob's clean code suggests creating the following methods to improve the readability of the function above.
-    // --- However, I don't always agree with this approach, as it can sometimes lead to an excessive number of unnecessary functions.
+    // --- However, I don't always agree with this approach, as it can sometimes lead to an excessive number of functions.
     private fun shouldIncreasePrice(wine: Wine): Boolean {
         return wine.price < 100
     }
@@ -101,7 +101,7 @@ class WineShop(var items: List<Wine>) {
         return if (wine.expiresInYears < 3) 4 else 2
     }
 
-    private fun applyStandardPriceIncrease(wine: Wine) {
+    private fun applyPriceIncrease(wine: Wine) {
         wine.price += BASE_PRICE_INCREASE
     }
 
