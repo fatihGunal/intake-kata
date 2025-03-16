@@ -74,7 +74,7 @@ class WineShop(var items: List<Wine>) {
     }
 
     private fun unexpiredWine(wine: Wine): Boolean {
-        return wine.expiresInYears < 0
+        return wine.expiresInYears > 0
     }
 
     private fun getEventWinePriceIncrease(wine: Wine): Int {
