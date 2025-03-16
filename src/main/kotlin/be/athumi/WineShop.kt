@@ -68,11 +68,11 @@ class WineShop(var items: List<Wine>) {
     }
 
     private fun applyPriceDecrease(wine: Wine) {
-        wine.price -= BASE_PRICE_INCREASE
+        wine.price -= BASE_PRICE_DECREASE
     }
 
     private fun applyPriceDecreaseWithFactor(wine: Wine) {
-        wine.price -= DECREASE_FACTOR * DECREASE_FACTOR
+        wine.price -= BASE_PRICE_DECREASE * DECREASE_FACTOR
     }
 
     private fun increaseWinePrice(wine: Wine, isEventWine: Boolean) {
